@@ -1,4 +1,7 @@
 class TagsController < ApplicationController
+  
+  before_filter :authenticate
+    
   # GET /tags
   # GET /tags.xml
   def index
@@ -79,5 +82,13 @@ class TagsController < ApplicationController
       format.html { redirect_to(tags_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  protected
+  
+  def authenticate
+  	authenticate_or_request_with_http_basic do |username, password|
+		username == "admin" && password == "admin"
+  	end 
   end
 end
